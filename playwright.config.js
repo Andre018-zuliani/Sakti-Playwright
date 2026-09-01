@@ -19,8 +19,12 @@ module.exports = defineConfig({
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
-    actionTimeout: 8000, // batas auto-waiting per aksi (fill/click)
+    actionTimeout: 15000, // batas auto-waiting per aksi (fill/click), dinaikkan agar toleran saat server demo publik sedang lambat
   },
+
+  // Saucedemo memakai atribut "data-test" (bukan default "data-testid"),
+  // jadi getByTestId() dikonfigurasi supaya mengacu ke atribut tersebut.
+  testIdAttribute: "data-test",
 
   projects: [
     {

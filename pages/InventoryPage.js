@@ -42,6 +42,10 @@ class InventoryPage {
 
   async logout() {
     await this.burgerMenuButton.click();
+    // Tunggu sampai link logout benar-benar visible (menu sidebar selesai animasi slide-in)
+    // sebelum diklik — ini tetap Auto-waiting Playwright (toBeVisible via waitFor),
+    // BUKAN hardcoded wait seperti waitForTimeout().
+    await this.logoutLink.waitFor({ state: "visible" });
     await this.logoutLink.click();
   }
 

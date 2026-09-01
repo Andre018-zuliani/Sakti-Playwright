@@ -47,14 +47,28 @@ test.describe("System Testing - Authentication (Login)", () => {
     await expect(inventoryPage.inventoryList).toBeVisible();
   });
 
+  test("TE2E-002b - Login berhasil menggunakan Built-in Locator getByPlaceholder", async ({
+    page,
+  }) => {
+    // Demonstrasi locator alternatif: getByPlaceholder & getByRole
+    await loginPage.usernameByPlaceholder.fill(users.standard.username);
+    await loginPage.passwordByPlaceholder.fill(users.standard.password);
+    await loginPage.loginButton.click(); // loginButton = getByRole('button', { name: 'Login' })
+
+    await expect(page).toHaveURL(/\/inventory\.html/);
+  });
+
   test("TE2E-003 - Login dengan password salah menampilkan error", async ({ page }) => {
     await loginPage.login(users.standard.username, "wrong_password");
 
-    // Visibility + Equality Assertion
+    // Visibility + Equality Assertion (memakai locator CSS attribute selector)
     await expect(loginPage.errorMessage).toBeVisible();
     await expect(loginPage.errorMessage).toHaveText(
       /Username and password do not match/
     );
+
+    // Assertion yang sama, kali ini memakai Built-in Locator getByTestId
+    await expect(loginPage.errorMessageByTestId).toBeVisible();
 
     await expect(page).not.toHaveURL(/\/inventory\.html/);
   });
@@ -109,7 +123,7 @@ test.describe("System Testing - Dashboard Product Listing & Sorting", () => {
     await expect(inventoryPage.inventoryItems).toHaveCount(6);
 
     const firstItem = inventoryPage.inventoryItems.first();
-    await expect(firstItem.locator(".inventory_item_img")).toBeVisible();
+    await expect(firstItem.locator(".inventory_item_img img")).toBeVisible();
     await expect(firstItem.locator(".inventory_item_name")).toBeVisible();
     await expect(firstItem.locator("button")).toHaveText("Add to cart");
   });

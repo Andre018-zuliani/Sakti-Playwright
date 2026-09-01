@@ -12,12 +12,24 @@ class LoginPage {
   constructor(page) {
     this.page = page;
 
-    // Locator menggunakan CSS Selector (id) dan Playwright Built-in Locator
+    // Locator menggunakan CSS Selector (id)
     this.usernameInput = page.locator("#user-name");
     this.passwordInput = page.locator("#password");
-    this.loginButton = page.locator("#login-button");
     this.errorMessage = page.locator('[data-test="error"]');
-    this.logo = page.getByText("Swag Labs"); // contoh Built-in Locator getByText
+
+    // Built-in Locator Playwright: getByTestId (mengacu ke atribut data-test,
+    // sudah dikonfigurasi lewat `testIdAttribute` di playwright.config.js)
+    this.errorMessageByTestId = page.getByTestId("error");
+
+    // Built-in Locator Playwright: getByRole (mencari elemen berdasarkan role aksesibilitas)
+    this.loginButton = page.getByRole("button", { name: "Login" });
+
+    // Built-in Locator Playwright: getByPlaceholder (mencari berdasarkan placeholder text)
+    this.usernameByPlaceholder = page.getByPlaceholder("Username");
+    this.passwordByPlaceholder = page.getByPlaceholder("Password");
+
+    // Built-in Locator Playwright: getByText
+    this.logo = page.getByText("Swag Labs");
   }
 
   async goto() {
