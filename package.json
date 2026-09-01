@@ -1,0 +1,15 @@
+{
+  "name": "sakti-playwright-automation",
+  "version": "1.0.0",
+  "description": "Tugas 8 - Praktik Automation Testing menggunakan Playwright (Modul SWQA - SAKTI)",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:system": "npx playwright test tests/system",
+    "test:e2e": "npx playwright test tests/e2e",
+    "report": "npx playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0"
+  }
+}
